@@ -62,6 +62,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>linkShortener</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
