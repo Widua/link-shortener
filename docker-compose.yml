@@ -1,9 +1,10 @@
-version: '3.1'
+version: '3.9'
 
 services:
   link-shortener:
     build:
       dockerfile: Dockerfile
+      target: run
       context: .
     depends_on:
       - redis
