@@ -4,9 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LinkShortenerApplicationTests {
+class LinkShortenerApplicationTest {
+
     @Test
-    void contextLoads() {
+    public void applicationContextLoaded() {
     }
 
 }

@@ -4,9 +4,13 @@ services:
   link-shortener:
     build:
       dockerfile: Dockerfile
-      target: run
+      target: prod
       context: .
     depends_on:
       - redis
+    expose:
+      - 8080:8080
   redis:
     image: redis
+    expose:
+      - 6379:6379
