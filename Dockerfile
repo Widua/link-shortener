@@ -1,16 +1,17 @@
-FROM maven:latest as build
+FROM maven:latest as base
 WORKDIR /app
-COPY pom.xml .
-COPY src/ /app/src/
-RUN mvn clean package
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN mvn dependency:resolve
+COPY src ./src
+
+FROM base as test
+RUN mvn test
+
+FROM base as build
+RUN mvn package
 
 FROM openjdk:17-alpine as run
-WORKDIR /app
-COPY --from=build /app/target/linkShortener.jar .
-CMD ["java", "-jar", "linkShortener.jar"]
-
-FROM maven:latest as test
-WORKDIR /app
-COPY pom.xml .
-COPY src/ /app/src/
-RUN mvn clean test
+EXPOSE 8080
+COPY --from=build /app/target/linkShortener.jar /app.jar
+CMD ["java", "-jar", "/app.jar"]
