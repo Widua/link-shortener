@@ -1,10 +1,12 @@
 package me.widua.linkshortener;
 
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
+@SpringBootTest
 public abstract class IntegrationTest {
 
     static GenericContainer<?> redisContainer = new GenericContainer<>(DockerImageName.parse("redis"))
