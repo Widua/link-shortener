@@ -5,9 +5,6 @@ COPY mvnw pom.xml ./
 RUN mvn dependency:resolve
 COPY src ./src
 
-FROM base as test
-RUN mvn test
-
 FROM base as build
 RUN mvn package
 
