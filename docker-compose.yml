@@ -9,10 +9,14 @@ services:
     depends_on:
       - redis
     expose:
+      - "8080"
+    ports:
       - "8080:8080"
   redis:
     image: redis
     expose:
+      - "6379"
+    ports:
       - "6379:6379"
   tests:
     image: maven:latest
