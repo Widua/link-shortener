@@ -17,3 +17,4 @@ a database to store string and source link.
 * Mapstruct
 * Lombok
 * GitHub actions
+* Test Containers
