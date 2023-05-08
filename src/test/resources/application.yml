@@ -1,0 +1,8 @@
+spring:
+  data:
+    redis:
+      port: 6379
+      host: localhost
+
+shortener:
+  random-string-size: 1
