@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LinkRepositoryTest extends IntegrationTest {
+class LinkRepositoryTestIntegration extends IntegrationTest {
 
     private final LinkRepository repository ;
     private LinkModel exampleEntity;
@@ -28,7 +28,7 @@ class LinkRepositoryTest extends IntegrationTest {
     }
 
     @Autowired
-    public LinkRepositoryTest(LinkRepository repository){
+    public LinkRepositoryTestIntegration(LinkRepository repository){
         this.repository = repository;
     }
 

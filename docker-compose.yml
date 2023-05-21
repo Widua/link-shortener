@@ -28,4 +28,4 @@ services:
       - $PWD:$PWD
       - /var/run/docker.sock:/var/run/docker.sock
       - ~/.m2:/root/.m2
-    command: mvn test
+    command: mvn verify
