@@ -23,18 +23,18 @@ class LinksMapperTest {
 
 
     @Autowired
-    public LinksMapperTest(LinksMapper mapper){
+    public LinksMapperTest(LinksMapper mapper) {
         this.mapper = mapper;
     }
 
     @BeforeEach
     void setUp() throws MalformedURLException {
         exampleDTO = new LinkDTO("xfxce3pox", new URL("https://www.google.com"));
-        exampleModel = new LinkModel("xfxce3pox","https://www.google.com", LocalDateTime.now());
+        exampleModel = new LinkModel("xfxce3pox", "https://www.google.com", LocalDateTime.now());
     }
 
     @Test
-    public void DTOToModelMappingTest(){
+    public void DTOToModelMappingTest() {
         //Given
         LinkModel expected = exampleModel;
         //When
@@ -64,9 +64,9 @@ class LinksMapperTest {
     }
 
     @Test
-    public void ModelToDTOMappingTest(){
+    public void ModelToDTOMappingTest() {
         //Given
-        LinkDTO expected = exampleDTO ;
+        LinkDTO expected = exampleDTO;
         //When
         LinkDTO mapped = mapper.linkModelToLinkDTO(exampleModel);
 

@@ -9,5 +9,5 @@ import java.net.URL;
 public interface LinkService {
     LinkDTO getWebsiteByRedirectString(String redirectString);
 
-    String shortenLink(URL realURL );
+    String shortenLink(URL realURL);
 }

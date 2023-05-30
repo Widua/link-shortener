@@ -20,12 +20,12 @@ public class LinkRestController {
     private final LinkService linkService;
 
     @Autowired
-    public LinkRestController( LinkService linkService){
+    public LinkRestController(LinkService linkService) {
         this.linkService = linkService;
     }
 
     @ExceptionHandler(MalformedURLException.class)
-    public ResponseEntity<String> malformedURL(){
+    public ResponseEntity<String> malformedURL() {
         return ResponseEntity.badRequest().body("Wrong URL provided!");
     }
 
@@ -36,8 +36,8 @@ public class LinkRestController {
     }
 
     @GetMapping("/{redirectString}")
-    public ResponseEntity<URLRecord> getWebsiteAddress(@PathVariable String redirectString ){
+    public ResponseEntity<URLRecord> getWebsiteAddress(@PathVariable String redirectString) {
         LinkDTO dto = linkService.getWebsiteByRedirectString(redirectString);
-        return ResponseEntity.ok( new URLRecord(dto.getRealUrl().toString()) );
+        return ResponseEntity.ok(new URLRecord(dto.getRealUrl().toString()));
     }
 }

@@ -14,39 +14,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LinkRepositoryTestIntegration extends IntegrationTest {
 
-    private final LinkRepository repository ;
+    private final LinkRepository repository;
     private LinkModel exampleEntity;
 
     @BeforeEach
-    public void setUp(){
-        exampleEntity = new LinkModel("xfxce3pox","https://www.google.com", LocalDateTime.now());
+    public void setUp() {
+        exampleEntity = new LinkModel("xfxce3pox", "https://www.google.com", LocalDateTime.now());
     }
 
     @AfterEach
-    public void tearDown(){
+    public void tearDown() {
         repository.deleteAll();
     }
 
     @Autowired
-    public LinkRepositoryTestIntegration(LinkRepository repository){
+    public LinkRepositoryTestIntegration(LinkRepository repository) {
         this.repository = repository;
     }
 
     @Test
-    public void doesItConnectsToDatabase(){
-        assertDoesNotThrow( () -> { repository.findAll(); } );
+    public void doesItConnectsToDatabase() {
+        assertDoesNotThrow(() -> {
+            repository.findAll();
+        });
     }
 
     @Test
-    public void doesSavingAndRetrievingFromDatabaseWorks(){
+    public void doesSavingAndRetrievingFromDatabaseWorks() {
         //When
         repository.save(exampleEntity);
         //Then
-        assertEquals(1 , Stream.of(repository.findAll()).count() );
+        assertEquals(1, Stream.of(repository.findAll()).count());
     }
 
     @Test
-    public void doesDeletingFromDatabaseWorks(){
+    public void doesDeletingFromDatabaseWorks() {
         //Given
         String id = exampleEntity.getRedirectString();
         //When

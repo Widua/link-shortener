@@ -9,7 +9,7 @@ import java.util.Random;
 public class BeanConfiguration {
 
     @Bean
-    public Random random(){
+    public Random random() {
         return new Random();
     }
 
