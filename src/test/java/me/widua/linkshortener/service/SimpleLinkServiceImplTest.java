@@ -27,19 +27,19 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-class SimpleLinkServiceImplTest{
+class SimpleLinkServiceImplTest {
 
     @MockBean
     private LinkRepository repository;
     @MockBean
     private Random mockedRandom;
-    private final LinkService underTest ;
+    private final LinkService underTest;
     private List<LinkModel> exampleExistingLinks;
     private List<String> exampleNotExistingLinks;
     private String exampleURL;
 
     @Autowired
-    public SimpleLinkServiceImplTest(SimpleLinkServiceImpl underTest){
+    public SimpleLinkServiceImplTest(SimpleLinkServiceImpl underTest) {
         this.underTest = underTest;
     }
 
@@ -48,8 +48,8 @@ class SimpleLinkServiceImplTest{
         exampleURL = "https://www.google.com";
 
         exampleExistingLinks = List.of(
-                new LinkModel("hb5yy8","https://www.google.com", LocalDateTime.now()),
-                new LinkModel("yyy888bbbg","https://www.github.com", LocalDateTime.now())
+                new LinkModel("hb5yy8", "https://www.google.com", LocalDateTime.now()),
+                new LinkModel("yyy888bbbg", "https://www.github.com", LocalDateTime.now())
         );
 
         exampleNotExistingLinks = List.of(
@@ -59,13 +59,13 @@ class SimpleLinkServiceImplTest{
     }
 
     @Test
-    public void ifShortenedWebsiteIsRequestedShouldReturnValidEntity(){
-       //Given
+    public void ifShortenedWebsiteIsRequestedShouldReturnValidEntity() {
+        //Given
         String validRedirectString = exampleExistingLinks.get(0).getRedirectString();
-       //When
+        //When
         when(repository.findById(validRedirectString)).thenReturn(Optional.of(exampleExistingLinks.get(0)));
         LinkDTO linkDTO = underTest.getWebsiteByRedirectString(validRedirectString);
-       //Then
+        //Then
         assertEquals(
                 exampleExistingLinks.get(0).getRealUrl(),
                 linkDTO.getRealUrl().toString()
@@ -73,7 +73,7 @@ class SimpleLinkServiceImplTest{
     }
 
     @Test
-    public void ifLinkIsNotShortenedThrowsAnError(){
+    public void ifLinkIsNotShortenedThrowsAnError() {
         //Given
         String invalidRedirectString = exampleNotExistingLinks.get(0);
         //When
@@ -92,10 +92,10 @@ class SimpleLinkServiceImplTest{
         //Given
         String linkToShorten = exampleURL;
         //When
-        when( repository.existsById(anyString())).thenReturn(false);
+        when(repository.existsById(anyString())).thenReturn(false);
         String shortenLink = underTest.shortenLink(new URL(linkToShorten));
         //
-        assertEquals( 1 , shortenLink.length() );
+        assertEquals(1, shortenLink.length());
     }
 
     @Test
@@ -104,7 +104,7 @@ class SimpleLinkServiceImplTest{
         String linkToShorten = exampleURL;
         //When
         when(mockedRandom.nextInt(anyInt()))
-                        .thenReturn(0,1);
+                .thenReturn(0, 1);
         when(repository.existsById("0")).thenReturn(true);
         when(repository.existsById("1")).thenReturn(false);
 
@@ -115,7 +115,6 @@ class SimpleLinkServiceImplTest{
                 shortenLink
         );
     }
-
 
 
 }

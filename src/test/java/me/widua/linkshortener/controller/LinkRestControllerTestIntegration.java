@@ -31,9 +31,8 @@ class LinkRestControllerTestIntegration extends IntegrationTest {
     private Gson gson;
 
 
-
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
         this.gson = new Gson();
     }
@@ -41,13 +40,13 @@ class LinkRestControllerTestIntegration extends IntegrationTest {
     @Test
     void malformedURL() throws Exception {
         String thisURLIsMalformed = "this_url_is_not_an_url";
-        String requestBody = gson.toJson( new URLRecord(thisURLIsMalformed));
+        String requestBody = gson.toJson(new URLRecord(thisURLIsMalformed));
         mockMvc.perform(
-                post("/shortener/api/v1/").content(requestBody).contentType(MediaType.APPLICATION_JSON) )
+                        post("/shortener/api/v1/").content(requestBody).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpectAll(
-                     status().isBadRequest(),
-                     content().string("Wrong URL provided!")
+                        status().isBadRequest(),
+                        content().string("Wrong URL provided!")
                 );
     }
 
@@ -55,7 +54,7 @@ class LinkRestControllerTestIntegration extends IntegrationTest {
     void doesNotExist() throws Exception {
         String fakeShorten = "gxgdqndq";
         mockMvc.perform(
-                get("/shortener/api/v1/"+fakeShorten))
+                        get("/shortener/api/v1/" + fakeShorten))
                 .andDo(print())
                 .andExpect(
                         status().isNotFound()
@@ -65,7 +64,7 @@ class LinkRestControllerTestIntegration extends IntegrationTest {
     @Test
     void applicationCanSaveAndReturnsLink() throws Exception {
         String link = "https://www.google.com";
-        String requestBody = gson.toJson( new URLRecord(link) );
+        String requestBody = gson.toJson(new URLRecord(link));
         MvcResult postResult = mockMvc.perform(
                         post("/shortener/api/v1/").content(requestBody).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -77,10 +76,10 @@ class LinkRestControllerTestIntegration extends IntegrationTest {
         String resultJsonBody = postResult.getResponse().getContentAsString();
         ShortenLinkRecord linkRecord = gson.fromJson(resultJsonBody, ShortenLinkRecord.class);
 
-        assertEquals(1,linkRecord.shortenLink().length());
+        assertEquals(1, linkRecord.shortenLink().length());
 
         mockMvc.perform(
-                get("/shortener/api/v1/"+linkRecord.shortenLink()))
+                        get("/shortener/api/v1/" + linkRecord.shortenLink()))
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),

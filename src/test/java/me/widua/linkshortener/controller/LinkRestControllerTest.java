@@ -36,12 +36,12 @@ class LinkRestControllerTest {
     private Gson gson;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         gson = new Gson();
     }
 
     @Autowired
-    public LinkRestControllerTest(MockMvc mockMvc){
+    public LinkRestControllerTest(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 
@@ -54,7 +54,7 @@ class LinkRestControllerTest {
         when(linkService.shortenLink(any())).thenThrow(LinkNotFoundException.class);
         //Then
         mockMvc
-                .perform( post("/shortener/api/v1/").content( requestAsJson ).contentType(MediaType.APPLICATION_JSON) )
+                .perform(post("/shortener/api/v1/").content(requestAsJson).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpectAll(
                         status().isBadRequest(),
@@ -65,7 +65,7 @@ class LinkRestControllerTest {
     @Test
     public void tryingToShortenNullReturnsBadRequest() throws Exception {
         mockMvc
-                .perform( post("/shortener/api/v1/").content("") )
+                .perform(post("/shortener/api/v1/").content(""))
                 .andDo(print())
                 .andExpect(
                         status().isBadRequest()
@@ -77,7 +77,7 @@ class LinkRestControllerTest {
         when(linkService.getWebsiteByRedirectString(any())).thenThrow(LinkNotFoundException.class);
 
         mockMvc
-                .perform( get("/shortener/api/v1/notExistingShorten"))
+                .perform(get("/shortener/api/v1/notExistingShorten"))
                 .andDo(print())
                 .andExpectAll(
                         status().isNotFound()
@@ -85,7 +85,7 @@ class LinkRestControllerTest {
     }
 
     @Test
-    public void tryingShortenValidLink() throws Exception{
+    public void tryingShortenValidLink() throws Exception {
         //Given
         URLRecord linkRequest = new URLRecord("https://www.google.com");
         ShortenLinkRecord wantedResponse = new ShortenLinkRecord("validShortenedLink");
@@ -94,25 +94,25 @@ class LinkRestControllerTest {
 
         //Then
         mockMvc
-                .perform( post("/shortener/api/v1/").content(gson.toJson(linkRequest)).contentType(MediaType.APPLICATION_JSON) )
+                .perform(post("/shortener/api/v1/").content(gson.toJson(linkRequest)).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpectAll(
-                    status().isOk(),
-                    content().json(gson.toJson(wantedResponse))
+                        status().isOk(),
+                        content().json(gson.toJson(wantedResponse))
                 );
 
     }
 
     @Test
-    public void tryingRetrieveShortenedLink() throws Exception{
+    public void tryingRetrieveShortenedLink() throws Exception {
         //Given
         URLRecord wantedResponse = new URLRecord("https://www.google.com");
-        LinkDTO mockedDTO = new LinkDTO("validRedirectString",new URL(wantedResponse.url()));
+        LinkDTO mockedDTO = new LinkDTO("validRedirectString", new URL(wantedResponse.url()));
         //When
         when(linkService.getWebsiteByRedirectString(anyString())).thenReturn(mockedDTO);
         //Then
         mockMvc
-                .perform( get(String.format("/shortener/api/v1/%s",mockedDTO.getRedirectString())))
+                .perform(get(String.format("/shortener/api/v1/%s", mockedDTO.getRedirectString())))
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),

@@ -31,7 +31,7 @@ class LocalFrontendControllerTestIntegration extends IntegrationTest {
     private Gson gson;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
         this.gson = new Gson();
     }
@@ -40,7 +40,7 @@ class LocalFrontendControllerTestIntegration extends IntegrationTest {
     public void doesNotExistPage() throws Exception {
         String fakeShorten = "gxgdqndq";
         mockMvc.perform(
-                        get("/"+fakeShorten))
+                        get("/" + fakeShorten))
                 .andDo(print())
                 .andExpect(
                         status().isNotFound()
@@ -50,7 +50,7 @@ class LocalFrontendControllerTestIntegration extends IntegrationTest {
     @Test
     public void shortenCorrectly() throws Exception {
         String link = "https://www.google.com";
-        String requestBody = gson.toJson( new URLRecord(link) );
+        String requestBody = gson.toJson(new URLRecord(link));
         MvcResult postResult = mockMvc.perform(
                         post("/shortener/api/v1/").content(requestBody).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -63,7 +63,7 @@ class LocalFrontendControllerTestIntegration extends IntegrationTest {
         ShortenLinkRecord linkRecord = gson.fromJson(resultJsonBody, ShortenLinkRecord.class);
 
         mockMvc.perform(
-                        get("/"+linkRecord.shortenLink()))
+                        get("/" + linkRecord.shortenLink()))
                 .andDo(print())
                 .andExpectAll(
                         status().is3xxRedirection(),

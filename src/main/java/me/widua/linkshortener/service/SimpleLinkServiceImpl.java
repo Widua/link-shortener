@@ -15,12 +15,12 @@ import java.util.Random;
 @Service
 public class SimpleLinkServiceImpl implements LinkService {
 
-    private final LinksMapper mapper ;
+    private final LinksMapper mapper;
     private final LinkRepository repository;
-    private final ShortenerConfig config ;
+    private final ShortenerConfig config;
     private final Random randomizer;
 
-    public SimpleLinkServiceImpl( LinksMapper mapper, LinkRepository repository, ShortenerConfig config , Random randomizer ){
+    public SimpleLinkServiceImpl(LinksMapper mapper, LinkRepository repository, ShortenerConfig config, Random randomizer) {
         this.mapper = mapper;
         this.repository = repository;
         this.config = config;
@@ -35,22 +35,22 @@ public class SimpleLinkServiceImpl implements LinkService {
 
     @Override
     public String shortenLink(URL realURL) {
-        String newRedirectString ;
+        String newRedirectString;
 
-        do{
+        do {
             newRedirectString = generateRandomString(config.getRandomStringSize());
-        } while (repository.existsById(newRedirectString) );
+        } while (repository.existsById(newRedirectString));
 
-        repository.save( new LinkModel(newRedirectString,realURL.toString(), LocalDateTime.now()) );
+        repository.save(new LinkModel(newRedirectString, realURL.toString(), LocalDateTime.now()));
         return newRedirectString;
     }
 
-    private String generateRandomString(Integer size){
+    private String generateRandomString(Integer size) {
         final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         StringBuilder randomStringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
             int randomIndex = randomizer.nextInt(characters.length());
-            randomStringBuilder.append( characters.charAt(randomIndex) );
+            randomStringBuilder.append(characters.charAt(randomIndex));
         }
         return randomStringBuilder.toString();
     }

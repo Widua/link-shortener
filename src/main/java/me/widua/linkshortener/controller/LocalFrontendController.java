@@ -16,13 +16,13 @@ public class LocalFrontendController {
     private final LinkService linkService;
 
     @Autowired
-    public LocalFrontendController(LinkService linkService){
+    public LocalFrontendController(LinkService linkService) {
         this.linkService = linkService;
     }
 
 
     @GetMapping("/{redirectString}")
-    public RedirectView redirectToShortenString(@PathVariable String redirectString){
+    public RedirectView redirectToShortenString(@PathVariable String redirectString) {
         RedirectView redirectView = new RedirectView();
         LinkDTO link = linkService.getWebsiteByRedirectString(redirectString);
         redirectView.setUrl(link.getRealUrl().toString());

@@ -13,10 +13,10 @@ public abstract class IntegrationTest {
             .withExposedPorts(6379);
 
     @DynamicPropertySource
-    static void redisPropertySet(DynamicPropertyRegistry registry){
+    static void redisPropertySet(DynamicPropertyRegistry registry) {
         redisContainer.start();
-        registry.add("spring.data.redis.port",redisContainer::getFirstMappedPort);
-        registry.add("spring.data.redis.host",redisContainer::getHost);
+        registry.add("spring.data.redis.port", redisContainer::getFirstMappedPort);
+        registry.add("spring.data.redis.host", redisContainer::getHost);
     }
 
 }
