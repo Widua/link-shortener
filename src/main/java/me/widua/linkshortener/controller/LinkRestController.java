@@ -29,11 +29,6 @@ public class LinkRestController {
         return ResponseEntity.badRequest().body("Wrong URL provided!");
     }
 
-    @ExceptionHandler(LinkNotFoundException.class)
-    public ResponseEntity<String> doesNotExist(){
-        return ResponseEntity.notFound().build();
-    }
-
     @PostMapping
     public ResponseEntity<ShortenLinkRecord> shortenLink(@RequestBody @Valid URLRecord linkToShorten) throws MalformedURLException {
         String shortenLink = linkService.shortenLink(new URL(linkToShorten.url()));
