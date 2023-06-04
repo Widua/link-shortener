@@ -30,6 +30,8 @@ public class SimpleLinkServiceImpl implements LinkService {
     @Override
     public LinkDTO getWebsiteByRedirectString(String redirectString) {
         LinkModel link = repository.findById(redirectString).orElseThrow(LinkNotFoundException::new);
+        link.setLastTimeUsed(LocalDateTime.now());
+        repository.save(link);
         return mapper.linkModelToLinkDTO(link);
     }
 
