@@ -22,8 +22,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -70,6 +69,7 @@ class SimpleLinkServiceImplTest {
                 exampleExistingLinks.get(0).getRealUrl(),
                 linkDTO.getRealUrl().toString()
         );
+        verify(repository).save(any());
     }
 
     @Test
